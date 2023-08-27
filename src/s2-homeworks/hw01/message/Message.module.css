@@ -1,0 +1,36 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.imageAndText {
+    width: 50%;
+    text-align: end;
+}
+
+.imageAndText img {
+   width: 75px
+}
+
+.text {
+    background-color: blue;
+    border-radius: 10px;
+    color: white;
+}
+
+.text:after {
+
+}
+
+.name {
+
+}
+
+.messageText {
+
+}
+
+.time {
+
+}
