@@ -1,7 +1,9 @@
 .button {
+    background-color: cornflowerblue;
 }
 
 .disabled {
+    background-color: blueviolet;
 }
 
 .secondary {
@@ -11,6 +13,7 @@
 }
 
 .red {
+    background-color: red;
 }
 
 .default:hover {
