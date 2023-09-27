@@ -7,9 +7,11 @@
 }
 
 .secondary {
+    background-color: chocolate;
 }
 
 .default {
+    background-color: #00cc22;
 }
 
 .red {
