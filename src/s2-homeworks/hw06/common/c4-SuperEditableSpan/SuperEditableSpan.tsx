@@ -45,8 +45,10 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
         setEditMode(false)
         onEnter?.()
     }
-
-    console.log(restProps.title)
+    console.log(children)
+    console.log(restProps)
+    console.log(restSpanProps)
+    console.log(restProps)
     const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
         // выключить editMode при нажатии за пределами инпута // делают студенты
 
@@ -88,7 +90,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
                         className={spanClassName}
                         {...restSpanProps}
                     >
-                        {restProps.title}
+                        {restSpanProps.title}
 
                         {children || restProps.value || defaultText}
                     </span>
