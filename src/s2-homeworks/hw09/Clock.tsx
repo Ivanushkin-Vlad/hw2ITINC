@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import SuperButton from '../hw04/common/c2-SuperButton/SuperButton';
-import { restoreState } from '../hw06/localStorage/localStorage';
+import {restoreState} from '../hw06/localStorage/localStorage';
 import s from './Clock.module.css';
 
 function Clock() {
@@ -31,10 +31,11 @@ function Clock() {
     };
 
     const stringTime = date.toLocaleTimeString('en-GB'); // Формат HH:MM:SS
-    const stringDate = date.toLocaleDateString('en-GB'); // Формат DD/MM/YYYY
+    const stringDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+    // Формат DD/MM/YYYY
 
-    const stringDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date); // День недели
-    const stringMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date); // Месяц
+    const stringDay = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format(date); // День недели
+    const stringMonth = new Intl.DateTimeFormat('en-US', {month: 'long'}).format(date); // Месяц
 
     return (
         <div className={s.clock}>
@@ -59,7 +60,7 @@ function Clock() {
                         </>
                     ) : (
                         <>
-                            <br />
+                            <br/>
                         </>
                     )}
                 </div>
