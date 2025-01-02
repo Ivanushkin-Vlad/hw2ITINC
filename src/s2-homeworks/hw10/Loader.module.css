@@ -1,3 +1,41 @@
 .loader {
-    /*свг и/или анимация*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Центрирование по высоте */
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    animation: rotate 2s linear infinite; /* Вращение */
+}
+
+.path {
+    stroke: #3498db; /* Цвет линии */
+    stroke-linecap: round; /* Закругление концов */
+    animation: dash 1.5s ease-in-out infinite; /* Анимация длины линии */
+}
+
+/* Анимация вращения */
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Анимация длины линии */
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150; /* Длина линии и зазор */
+        stroke-dashoffset: 0; /* Смещение линии */
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
 }
