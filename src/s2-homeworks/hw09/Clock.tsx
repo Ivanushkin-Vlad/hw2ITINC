@@ -30,7 +30,8 @@ function Clock() {
         setShow(false);
     };
 
-    const stringTime = date.toLocaleTimeString('en-GB'); // Формат HH:MM:SS
+    const stringTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+    // Формат HH:MM:SS
     const stringDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
     // Формат DD/MM/YYYY
 
