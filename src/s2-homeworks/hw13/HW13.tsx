@@ -38,7 +38,7 @@ const HW13 = () => {
             .then((res) => {
                 setCode('Код 200!');
                 setImage(success200);
-                setText(res.data.message || '...всё ок'); // Дефолтный текст
+                setText(res.data.message || '...всё ок)'); // Дефолтный текст
                 setInfo('');
             })
             .catch((e) => {
@@ -49,16 +49,16 @@ const HW13 = () => {
                     setText('Error'); // Текст для null
                 } else if (e.response?.status === 400) {
                     setImage(error400);
-                    setText('Эмуляция ошибки на сервере');
+                    setText('Ты не отправил success в body вообще!');
                 } else if (e.response?.status === 500) {
                     setImage(error500);
-                    setText('Ошибка на сервере');
+                    setText('эмитация ошибки на сервере');
                 } else {
                     setImage(errorUnknown);
                     setText('Ты не отправил success в body вообще!');
                 }
 
-                setCode(`Ошибка ${e.response?.status || 'unknown'}`);
+                setCode(`Ошибка ${e.response?.status || 'Error'}`);
                 setInfo('');
             });
     };
