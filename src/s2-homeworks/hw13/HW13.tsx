@@ -8,6 +8,8 @@ import error400 from './images/400.svg'
 import error500 from './images/500.svg'
 import errorUnknown from './images/error.svg'
 
+
+
 /*
 * 1 - дописать функцию send
 * 2 - дизэйблить кнопки пока идёт запрос
@@ -36,11 +38,23 @@ const HW13 = () => {
             .then((res) => {
                 setCode('Код 200!')
                 setImage(success200)
+                setText(res.data.message)
+                setInfo('')
                 // дописать
 
             })
             .catch((e) => {
+                console.log(e)
                 // дописать
+                switch (e.response.status){
+                    case 400: setImage(error400)
+                        break
+                    case 500: setImage(error500)
+                        break
+                    default: setImage(errorUnknown)
+                }
+                setCode(e.message)
+                setInfo('')
 
             })
     }
@@ -55,6 +69,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
+                        disabled={!!info}
                         // дописать
 
                     >
@@ -64,6 +79,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
+                        disabled={!!info}
                         // дописать
 
                     >
@@ -73,6 +89,7 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
+                        disabled={!!info}
                         // дописать
 
                     >
@@ -82,6 +99,7 @@ const HW13 = () => {
                         id={'hw13-send-null'}
                         onClick={send(null)} // имитация запроса на не корректный адрес
                         xType={'secondary'}
+                        disabled={!!info}
                         // дописать
 
                     >
