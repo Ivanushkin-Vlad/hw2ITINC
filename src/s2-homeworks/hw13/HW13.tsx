@@ -25,40 +25,43 @@ const HW13 = () => {
     const send = (x?: boolean | null) => () => {
         const url =
             x === null
-                ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
-                : 'https://samurai.it-incubator.io/api/3.0/homework/test'
+                ? 'https://xxxxxx.ccc' // Некорректный адрес
+                : 'https://samurai.it-incubator.io/api/3.0/homework/test';
 
-        setCode('')
-        setImage('')
-        setText('')
-        setInfo('...loading')
+        setCode('');
+        setImage('');
+        setText('');
+        setInfo('...loading');
 
         axios
             .post(url, {success: x})
             .then((res) => {
-                setCode('Код 200!')
-                setImage(success200)
-                setText(res.data.message)
-                setInfo('')
-                // дописать
-
+                setCode('Код 200!');
+                setImage(success200);
+                setText(res.data.message || '...всё ок'); // Дефолтный текст
+                setInfo('');
             })
             .catch((e) => {
-                console.log(e)
-                // дописать
-                switch (e.response.status){
-                    case 400: setImage(error400)
-                        break
-                    case 500: setImage(error500)
-                        break
-                    default: setImage(errorUnknown)
+                console.log(e);
+
+                if (x === null) {
+                    setImage(errorUnknown);
+                    setText('Error'); // Текст для null
+                } else if (e.response?.status === 400) {
+                    setImage(error400);
+                    setText('Эмуляция ошибки на сервере');
+                } else if (e.response?.status === 500) {
+                    setImage(error500);
+                    setText('Ошибка на сервере');
+                } else {
+                    setImage(errorUnknown);
+                    setText('Ты не отправил success в body вообще!');
                 }
-                setCode(e.message)
-                setInfo('')
 
-            })
-    }
-
+                setCode(`Ошибка ${e.response?.status || 'unknown'}`);
+                setInfo('');
+            });
+    };
     return (
         <div id={'hw13'}>
             <div className={s2.hwTitle}>Homework #13</div>
