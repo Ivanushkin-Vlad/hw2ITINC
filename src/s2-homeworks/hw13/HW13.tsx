@@ -38,7 +38,7 @@ const HW13 = () => {
             setCode('Код 200!');
             setImage(success200);
             setText(res.data.message || '...всё ок)');
-            setInfo('Код 200 - запрос выполнен успешно.');
+            setInfo('код 200 - обычно означает что скорее всего всё ок)');
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 if (x === null) {
