@@ -1,27 +1,27 @@
-import React, {useState} from 'react'
-import s2 from '../../s1-main/App.module.css'
-import s from './HW13.module.css'
-import SuperButton from '../hw04/common/c2-SuperButton/SuperButton'
-import axios from 'axios'
-import success200 from './images/200.svg'
-import error400 from './images/400.svg'
-import error500 from './images/500.svg'
-import errorUnknown from './images/error.svg'
-
+import React, { useState } from 'react';
+import s2 from '../../s1-main/App.module.css';
+import s from './HW13.module.css';
+import SuperButton from '../hw04/common/c2-SuperButton/SuperButton';
+import axios, { AxiosError } from 'axios';
+import success200 from './images/200.svg';
+import error400 from './images/400.svg';
+import error500 from './images/500.svg';
+import errorUnknown from './images/error.svg';
 
 /*
-* 1 - дописать функцию send
-* 2 - дизэйблить кнопки пока идёт запрос
-* 3 - сделать стили в соответствии с дизайном
-* */
+ * 1 - дописана функция send
+ * 2 - кнопки дизэйблятся пока идёт запрос
+ * 3 - стили соответствуют дизайну
+ */
 
 const HW13 = () => {
-    const [code, setCode] = useState('')
-    const [text, setText] = useState('')
-    const [info, setInfo] = useState('')
-    const [image, setImage] = useState('')
+    const [code, setCode] = useState('');
+    const [text, setText] = useState('');
+    const [info, setInfo] = useState('');
+    const [image, setImage] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // Управление состоянием кнопок
 
-    const send = (x?: boolean | null) => () => {
+    const send = (x?: boolean | null) => async () => {
         const url =
             x === null
                 ? 'https://xxxxxx.ccc' // Некорректный адрес
@@ -31,40 +31,45 @@ const HW13 = () => {
         setImage('');
         setText('');
         setInfo('...loading');
+        setIsLoading(true); // Блокируем кнопки
 
-        axios
-            .post(url, {success: x})
-            .then((res) => {
-                setCode('Код 200!');
-                setImage(success200);
-                setText(res.data.message || '...всё ок)');
-                setInfo('код 200 - обычно означает что скорее всего всё ок)');
-            })
-            .catch((e) => {
-                console.log(e);
-
+        try {
+            const res = await axios.post(url, { success: x });
+            setCode('Код 200!');
+            setImage(success200);
+            setText(res.data.message || '...всё ок)');
+            setInfo('Код 200 - запрос выполнен успешно.');
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
                 if (x === null) {
                     setImage(errorUnknown);
-                    setText('Error');
-                    setInfo('Error'); // Добавляем текст в info
+                    setText('Ошибка');
+                    setInfo('Неизвестная ошибка - некорректный адрес.');
                 } else if (e.response?.status === 400) {
                     setImage(error400);
                     setText('Ты не отправил success в body вообще!');
-                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
+                    setInfo('Ошибка 400 - фронт отправил некорректные данные.');
                 } else if (e.response?.status === 500) {
                     setImage(error500);
-                    setText('эмитация ошибки на сервере');
-                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
+                    setText('Эмуляция ошибки на сервере');
+                    setInfo('Ошибка 500 - что-то сломалось на сервере.');
                 } else {
                     setImage(errorUnknown);
-                    setText('Ты не отправил success в body вообще!');
-                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
+                    setText('Неизвестная ошибка');
+                    setInfo('Что-то пошло не так...');
                 }
-
-                setCode(`Ошибка ${e.response?.status || 'Error'}`);
-            });
-
+                setCode(`Ошибка ${e.response?.status || 'Unknown'}`);
+            } else {
+                setImage(errorUnknown);
+                setText('Произошла неизвестная ошибка.');
+                setInfo('Ошибка: не удалось определить тип.');
+                setCode('Unknown Error');
+            }
+        } finally {
+            setIsLoading(false); // Разблокируем кнопки
+        }
     };
+
     return (
         <div id={'hw13'}>
             <div className={s2.hwTitle}>Homework #13</div>
@@ -75,9 +80,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
-                        disabled={!!info}
-                        // дописать
-
+                        disabled={isLoading} // Блокируем кнопку, если запрос выполняется
                     >
                         Send true
                     </SuperButton>
@@ -85,9 +88,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
-                        disabled={!!info}
-                        // дописать
-
+                        disabled={isLoading} // Блокируем кнопку, если запрос выполняется
                     >
                         Send false
                     </SuperButton>
@@ -95,19 +96,15 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
-                        disabled={!!info}
-                        // дописать
-
+                        disabled={isLoading} // Блокируем кнопку, если запрос выполняется
                     >
                         Send undefined
                     </SuperButton>
                     <SuperButton
                         id={'hw13-send-null'}
-                        onClick={send(null)} // имитация запроса на не корректный адрес
+                        onClick={send(null)} // Некорректный запрос
                         xType={'secondary'}
-                        disabled={!!info}
-                        // дописать
-
+                        disabled={isLoading} // Блокируем кнопку, если запрос выполняется
                     >
                         Send null
                     </SuperButton>
@@ -115,7 +112,7 @@ const HW13 = () => {
 
                 <div className={s.responseContainer}>
                     <div className={s.imageContainer}>
-                        {image && <img src={image} className={s.image} alt="status"/>}
+                        {image && <img src={image} className={s.image} alt="status" />}
                     </div>
 
                     <div className={s.textContainer}>
@@ -132,7 +129,7 @@ const HW13 = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default HW13
+export default HW13;
