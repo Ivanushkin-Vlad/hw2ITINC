@@ -49,7 +49,7 @@ const HW13 = () => {
                     setText('Error'); // Текст для null
                 } else if (e.response?.status === 400) {
                     setImage(error400);
-                    setText('Ты не отправил success в body!');
+                    setText('Ты не отправил success в body вообще!');
                 } else if (e.response?.status === 500) {
                     setImage(error500);
                     setText('эмитация ошибки на сервере');
