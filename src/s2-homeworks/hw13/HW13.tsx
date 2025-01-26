@@ -9,7 +9,6 @@ import error500 from './images/500.svg'
 import errorUnknown from './images/error.svg'
 
 
-
 /*
 * 1 - дописать функцию send
 * 2 - дизэйблить кнопки пока идёт запрос
@@ -38,29 +37,33 @@ const HW13 = () => {
             .then((res) => {
                 setCode('Код 200!');
                 setImage(success200);
-                setText(res.data.message || '...всё ок)'); // Дефолтный текст
-                setInfo('');
+                setText(res.data.message || '...всё ок)');
+                setInfo('код 200 - обычно означает что скорее всего всё ок)');
             })
             .catch((e) => {
                 console.log(e);
 
                 if (x === null) {
                     setImage(errorUnknown);
-                    setText('Error'); // Текст для null
+                    setText('Error');
+                    setInfo('Error'); // Добавляем текст в info
                 } else if (e.response?.status === 400) {
                     setImage(error400);
                     setText('Ты не отправил success в body вообще!');
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
                 } else if (e.response?.status === 500) {
                     setImage(error500);
                     setText('эмитация ошибки на сервере');
+                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
                 } else {
                     setImage(errorUnknown);
                     setText('Ты не отправил success в body вообще!');
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
                 }
 
                 setCode(`Ошибка ${e.response?.status || 'Error'}`);
-                setInfo('');
             });
+
     };
     return (
         <div id={'hw13'}>
