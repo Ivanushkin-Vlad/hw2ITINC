@@ -48,10 +48,10 @@ const HW13 = () => {
                 } else if (e.response?.status === 400) {
                     setImage(error400);
                     setText('Ты не отправил success в body вообще!');
-                    setInfo('Ошибка 400 - фронт отправил некорректные данные.');
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
                 } else if (e.response?.status === 500) {
                     setImage(error500);
-                    setText('Эмуляция ошибки на сервере');
+                    setText('эмитация ошибки на сервере');
                     setInfo('Ошибка 500 - что-то сломалось на сервере.');
                 } else {
                     setImage(errorUnknown);
