@@ -44,7 +44,7 @@ const HW13 = () => {
                 if (x === null) {
                     setImage(errorUnknown);
                     setText('Ошибка');
-                    setInfo('Неизвестная ошибка - некорректный адрес.');
+                    setInfo('Error');
                 } else if (e.response?.status === 400) {
                     setImage(error400);
                     setText('Ты не отправил success в body вообще!');
