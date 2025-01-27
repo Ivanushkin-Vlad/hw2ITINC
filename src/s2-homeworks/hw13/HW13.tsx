@@ -55,7 +55,7 @@ const HW13 = () => {
                     setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
                 } else {
                     setImage(errorUnknown);
-                    setText('Error');
+                    setText('Неизвестная ошибка - некорректный адрес.');
                     setInfo('Что-то пошло не так...');
                 }
                 setCode(`Ошибка ${e.response?.status || 'Unknown'}`);
