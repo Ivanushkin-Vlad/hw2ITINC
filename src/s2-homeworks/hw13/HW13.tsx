@@ -52,10 +52,10 @@ const HW13 = () => {
                 } else if (e.response?.status === 500) {
                     setImage(error500);
                     setText('эмитация ошибки на сервере');
-                    setInfo('Ошибка 500 - что-то сломалось на сервере.');
+                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
                 } else {
                     setImage(errorUnknown);
-                    setText('Неизвестная ошибка');
+                    setText('Error');
                     setInfo('Что-то пошло не так...');
                 }
                 setCode(`Ошибка ${e.response?.status || 'Unknown'}`);
